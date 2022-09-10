@@ -24,7 +24,7 @@ class TextUnit extends Unit {
   update(nextElement) {
     if (this._currentElement !== nextElement) {
       this._currentElement = nextElement;
-      $(`[data-reactid]="${this._reactid}"`).html(nextElement);
+      $(`[data-reactid="${this._reactid}"]`).html(nextElement);
     }
   }
 }
@@ -151,8 +151,25 @@ class CompositeUnit extends Unit {
   }
 }
 
-function shouldDeepCompare() {
+/**
+ * @description 判断新老元素的类型一样不一样
+ * @param {*} oldElement 老的元素 
+ * @param {*} newElement 新的元素
+ */
+function shouldDeepCompare(oldElement, newElement) {
+  if (oldElement != null && newElement != null) {
+    const oldType = typeof oldElement;
+    const newType = typeof newElement;
 
+    const textNodeTypes = ["string", "number"];
+
+    if (textNodeTypes.includes(oldType) && textNodeTypes.includes(newType)) {
+      return true;
+    } else if (oldElement instanceof Element && newElement instanceof Element) {
+      return oldElement.type === newElement.type;
+    }
+  }
+  return false;
 }
 
 export function createUnit(element) {

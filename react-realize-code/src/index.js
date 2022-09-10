@@ -86,7 +86,7 @@ class Counter extends React.Component {
     console.log("component did Mount[parent]");
     setInterval(() => {
       this.setState({ number: this.state.number + 1 })
-    })
+    }, 1000)
   }
 
   // 决定组件是否需要更新
